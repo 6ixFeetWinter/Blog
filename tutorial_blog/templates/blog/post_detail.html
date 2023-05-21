@@ -1,0 +1,45 @@
+{% extends "blog/base.html" %} {% block content %}
+<section class="single-page">
+    <h1 class="blog-title">{{post.title}}</h1>
+    <p class="blog-date"><small>Posted at{{post.posted_date}}</small></p>
+    <p class="intro">{{post.intro}}</p>
+    <p class="body">{{post.body}}</p>
+
+
+    <!--コメントを表示-->
+    <h2 class="comment-title">コメント</h2>
+
+    {% for comment in post.comments.all %}
+    <article class="comment-area">
+        <div>
+            <p class="comment-single">
+                <strong class="single-comment-title">
+                    {{comment.name}}
+                    <small>{{comment.posted_date}}</small>
+                </strong>
+                <br />
+                {{comment.body}}
+            </p>
+        </div>
+    </article>
+    {% empty %}
+    <div class="comment-empty">
+        <p>コメントはまだありません</p>
+    </div>
+
+    {% endfor %}
+
+    <!--コメント-->
+    <h2>コメントを追加</h2>
+    <form>
+        {% csrf_token %}<!--セキュリティのため-->
+        {{form.as_p}}
+        <div>
+        <div>
+            <button class="danger">送信</button>
+        </div>
+        </div>
+    </form>
+</div>
+</section>
+{% endblock %}
